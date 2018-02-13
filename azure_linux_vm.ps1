@@ -15,7 +15,7 @@ az --version
 
 # a logical container into which Azure resources are deployed and managed
 
-az group create --name myResourceGroupVM --location eastus
+# az group create --name myResourceGroupVM --location eastus
 
 az login
 <#
