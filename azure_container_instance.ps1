@@ -258,4 +258,4 @@ PS C:\logan\test\nodeweb> az group delete --name myResourceGroup
 Are you sure you want to perform this operation? (y/n): y
 #>
 
-az logou
+az logout
