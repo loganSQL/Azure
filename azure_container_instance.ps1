@@ -82,6 +82,7 @@ logansqlcr.azurecr.io/node-alphine   v1                  49c4b7b2b458        21 
 # docker images
 # When you log in with az acr login, the CLI uses the token created when you executed az login to seamlessly authenticate your session with your registry. 
 # Once you've logged in this way, your credentials are cached, and subsequent docker commands in your session do not require a username or password.
+# the token will expire in one hour
 az acr login --name logansqlcr
 
 # push the image from local docker registry to Azure Container Registry
