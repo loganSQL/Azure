@@ -63,6 +63,25 @@ ACR works very nicely with ACI by allowing you to link the two together with min
 
 # create individual container registry
 az acr create --resource-group myResourceGroup --name logansqlcr --sku Basic --admin-enabled true
+{
+    "adminUserEnabled": true,
+    "creationDate": "2019-06-27T14:40:08.362962+00:00",
+    "id": "/subscriptions/d1aabb68-9535-4a7f-bfd4-a4476ed15e30/resourceGroups/myResourceGroup/providers/Microsoft.ContainerRegistry/registries/logansqlcr",
+    "location": "eastus",
+    "loginServer": "logansqlcr.azurecr.io",
+    "name": "logansqlcr",
+    "networkRuleSet": null,
+    "provisioningState": "Succeeded",
+    "resourceGroup": "myResourceGroup",
+    "sku": {
+      "name": "Basic",
+      "tier": "Basic"
+    },
+    "status": null,
+    "storageAccount": null,
+    "tags": {},
+    "type": "Microsoft.ContainerRegistry/registries"
+  }
 <#
 This will create us a registry using the cheapest tier, Basic, but you can change the --sku to be Standard or Premium if you need. 
 The different sku’s mainly represent increased storage, with Premium also including geo replication. 
@@ -148,61 +167,61 @@ az acr show --name logansqlcr --query loginServer
  and we only need one (there are two passwords so that there’s a backup should one be compromised and need resetting).
 #>
 az acr credential show --name logansqlcr --query "passwords[0].value"
-
+"DdZ77jQtkUskx5jtjLxPtmZoeK+uF+f5"
 <#
 Ideally you’d want to assign this to a variable in your shell (bash/PowerShell/etc.) rather than writing it to stdout. 
 That’d avoid it ending up in the shells history and potentially being compromised.
 #>
 # deploy the container, like docker exec or docker start locally
 # 
-az container create --resource-group myResourceGroup --name node-alphine --image logansqlcr.azurecr.io/node-alphine:v1 --cpu 1 --memory 1 --registry-login-server logansqlcr.azurecr.io --registry-username logansqlcr --registry-password XXXXX --dns-name-label logansqlnodeweb --ports 80
+az container create --resource-group myResourceGroup --name node-alphine --image logansqlcr.azurecr.io/node-alphine:v1 --cpu 1 --memory 1 --registry-login-server logansqlcr.azurecr.io --registry-username logansqlcr --registry-password "DdZ77jQtkUskx5jtjLxPtmZoeK+uF+f5" --dns-name-label logansqlnodeweb --ports 80
 #az container create --resource-group myResourceGroup --name mycontainer --image mcr.microsoft.com/azuredocs/aci-helloworld --dns-name-label aci-logan --ports 80
 
 <#
-PS C:\logan\test\nodeweb> az container create --resource-group myResourceGroup --name mycontainer --image mcr.microsoft.com/azuredocs/aci-helloworld --dns-name-label aci-logan --ports 80
+PS C:\logan\test\nodeweb> az container create --resource-group myResourceGroup --name node-alphine --image logansqlcr.azurecr.io/node-alphine:v1 --cpu 1 --memory 1 --registry-login-server logansqlcr.azurecr.io --registry-username logansqlcr --registry-password "DdZ77jQtkUskx5jtjLxPtmZoeK+uF+f5" --dns-name-label logansqlnodeweb --ports 80
 {
   "containers": [
     {
       "command": null,
       "environmentVariables": [],
-      "image": "mcr.microsoft.com/azuredocs/aci-helloworld",
+      "image": "logansqlcr.azurecr.io/node-alphine:v1",
       "instanceView": {
         "currentState": {
           "detailStatus": "",
           "exitCode": null,
           "finishTime": null,
-          "startTime": "2019-06-26T15:47:39+00:00",
+          "startTime": "2019-06-27T14:47:06+00:00",
           "state": "Running"
         },
         "events": [
           {
             "count": 1,
-            "firstTimestamp": "2019-06-26T15:47:32+00:00",
-            "lastTimestamp": "2019-06-26T15:47:32+00:00",
-            "message": "pulling image \"mcr.microsoft.com/azuredocs/aci-helloworld\"",
+            "firstTimestamp": "2019-06-27T14:46:56+00:00",
+            "lastTimestamp": "2019-06-27T14:46:56+00:00",
+            "message": "pulling image \"logansqlcr.azurecr.io/node-alphine:v1\"",
             "name": "Pulling",
             "type": "Normal"
           },
           {
             "count": 1,
-            "firstTimestamp": "2019-06-26T15:47:36+00:00",
-            "lastTimestamp": "2019-06-26T15:47:36+00:00",
-            "message": "Successfully pulled image \"mcr.microsoft.com/azuredocs/aci-helloworld\"",
+            "firstTimestamp": "2019-06-27T14:47:03+00:00",
+            "lastTimestamp": "2019-06-27T14:47:03+00:00",
+            "message": "Successfully pulled image \"logansqlcr.azurecr.io/node-alphine:v1\"",
             "name": "Pulled",
             "type": "Normal"
           },
           {
             "count": 1,
-            "firstTimestamp": "2019-06-26T15:47:39+00:00",
-            "lastTimestamp": "2019-06-26T15:47:39+00:00",
+            "firstTimestamp": "2019-06-27T14:47:06+00:00",
+            "lastTimestamp": "2019-06-27T14:47:06+00:00",
             "message": "Created container",
             "name": "Created",
             "type": "Normal"
           },
           {
             "count": 1,
-            "firstTimestamp": "2019-06-26T15:47:39+00:00",
-            "lastTimestamp": "2019-06-26T15:47:39+00:00",
+            "firstTimestamp": "2019-06-27T14:47:06+00:00",
+            "lastTimestamp": "2019-06-27T14:47:06+00:00",
             "message": "Started container",
             "name": "Started",
             "type": "Normal"
@@ -212,7 +231,7 @@ PS C:\logan\test\nodeweb> az container create --resource-group myResourceGroup -
         "restartCount": 0
       },
       "livenessProbe": null,
-      "name": "mycontainer",
+      "name": "node-alphine",
       "ports": [
         {
           "port": 80,
@@ -225,7 +244,7 @@ PS C:\logan\test\nodeweb> az container create --resource-group myResourceGroup -
         "requests": {
           "cpu": 1.0,
           "gpu": null,
-          "memoryInGb": 1.5
+          "memoryInGb": 1.0
         }
       },
       "volumeMounts": null
@@ -233,17 +252,23 @@ PS C:\logan\test\nodeweb> az container create --resource-group myResourceGroup -
   ],
   "diagnostics": null,
   "dnsConfig": null,
-  "id": "/subscriptions/d1aabb68-9535-4a7f-bfd4-a4476ed15e30/resourceGroups/myResourceGroup/providers/Microsoft.ContainerInstance/containerGroups/mycontainer",
+  "id": "/subscriptions/d1aabb68-9535-4a7f-bfd4-a4476ed15e30/resourceGroups/myResourceGroup/providers/Microsoft.ContainerInstance/containerGroups/node-alphine",
   "identity": null,
-  "imageRegistryCredentials": null,
+  "imageRegistryCredentials": [
+    {
+      "password": null,
+      "server": "logansqlcr.azurecr.io",
+      "username": "logansqlcr"
+    }
+  ],
   "instanceView": {
     "events": [],
     "state": "Running"
   },
   "ipAddress": {
-    "dnsNameLabel": "aci-logan",
-    "fqdn": "aci-logan.eastus.azurecontainer.io",
-    "ip": "52.249.205.30",
+    "dnsNameLabel": "logansqlnodeweb",
+    "fqdn": "logansqlnodeweb.eastus.azurecontainer.io",
+    "ip": "52.224.143.133",
     "ports": [
       {
         "port": 80,
@@ -253,7 +278,7 @@ PS C:\logan\test\nodeweb> az container create --resource-group myResourceGroup -
     "type": "Public"
   },
   "location": "eastus",
-  "name": "mycontainer",
+  "name": "node-alphine",
   "networkProfile": null,
   "osType": "Linux",
   "provisioningState": "Succeeded",
@@ -275,14 +300,26 @@ https://michaelscodingspot.com/creating-containers-on-demand-with-azure-containe
 #>
 
 # Check status : Running
-az container show --resource-group myResourceGroup --name mycontainer --query instanceView.state
+az container show --resource-group myResourceGroup --name node-alphine --query instanceView.state
 
 # FQDN: "aci-logan.eastus.azurecontainer.io"
-az container show --resource-group myResourceGroup --name mycontainer --query ipAddress.fqdn
+az container show --resource-group myResourceGroup --name node-alphine --query ipAddress.fqdn
 
 # View logs
-az container logs --resource-group myResourceGroup --name mycontainer
+az container logs --resource-group myResourceGroup --name node-alphine
 
+<#
+PS C:\logan\test\nodeweb> az container show --resource-group myResourceGroup --name node-alphine --query instanceView.state
+"Running"
+PS C:\logan\test\nodeweb> az container show --resource-group myResourceGroup --name node-alphine --query ipAddress.fqdn
+"logansqlnodeweb.eastus.azurecontainer.io"
+PS C:\logan\test\nodeweb> az container logs --resource-group myResourceGroup --name node-alphine
+
+> docker_web_app@1.0.0 start /usr/src/app
+> node server.js
+
+Running on http://0.0.0.0:8080
+#>
 <#
 Accessing Other Azure Services : building an application to run in ACI that needs to access another Azure Resource, maybe Azure SQL.
 ACI allows us to set environment variables. These work just as you’d expect coming from Docker and can be created as either normal environment variables 
@@ -293,7 +330,7 @@ create a SQL connection string for a web application, note that I’m not using 
 https://www.aaron-powell.com/posts/2019-03-20-intro-to-azure-container-instances/
 az container create --resource-group aci-from-scratch-03 --name aci-from-scratch-03 --image acifromscratch03.azurecr.io/aci-from-scratch-03:v1 --registry-login-server acifromscratch03.azurecr.io --registry-username acifromscratch03 --registry-password <password> --dns-name-label aci-from-scratch-03 --ports 80 --environment-variables 'SQLAZURECONNSTR_DefaultConnection'='Server=tcp:aci-from-scratch-03-sql.database.windows.net,1433;Database=aci-from-scratch;User ID=aci;Password=<sql password>;Encrypt=true;Connection Timeout=30;'
 #>
-$SQLCONNECTIONSTR='Server=tcp:aci-from-scratch-03-sql.database.windows.net,1433;Database=aci-from-scratch;User ID=aci;Password=<sql password>;Encrypt=true;Connection Timeout=30;'
+$SQLCONNECTIONSTR='Server=tcp:logan-sql.database.windows.net,1433;Database=testdb;User ID=logan;Password=<sql password>;Encrypt=true;Connection Timeout=30;'
 az container create --resource-group myResourceGroup --name node-alphine --image logansqlcr.azurecr.io/node-alphine:v1 --cpu 1 --memory 1 --registry-login-server logansqlcr.azurecr.io --registry-username logansqlcr --registry-password XXXXX --dns-name-label logansqlnodeweb --ports 80 --environment-variables 'SQLAZURECONNSTR_DefaultConnection'=$SQLCONNECTIONSTR
 
 <#
