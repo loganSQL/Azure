@@ -41,7 +41,9 @@ $startip='0.0.0.0'
 $endip='0.0.0.0'
 ```
 ### Create a resource group
+```
 az group create --name $resourceGroupName --location $location
+```
 ```
 {
   "id": "/subscriptions/d1aabb68-9535-4a7f-bfd4-a4476ed15e30/resourceGroups/myResourceGroup-logan",
@@ -56,7 +58,9 @@ az group create --name $resourceGroupName --location $location
 }
 ```
 ### Create a logical server in the resource group
+```
 az sql server create  --name $servername  --resource-group $resourceGroupName --location $location  --admin-user $adminlogin --admin-password $password
+```
 ```
 {
   "administratorLogin": "ServerAdmin",
@@ -75,7 +79,9 @@ az sql server create  --name $servername  --resource-group $resourceGroupName --
 }
 ```
 ### Configure a firewall rule for the server
+```
 az sql server firewall-rule create --resource-group $resourceGroupName --server $servername -n AllowYourIp --start-ip-address $startip --end-ip-address $endip
+```
 ```
 {
   "endIpAddress": "0.0.0.0",
@@ -89,7 +95,9 @@ az sql server firewall-rule create --resource-group $resourceGroupName --server 
 }
 ```
 ### Create a database in the server with zone redundancy as false (save money)
-PS C:\logan\test\azure> az sql db create  --resource-group $resourceGroupName --server $servername --name mySampleDatabase --sample-name AdventureWorksLT --edition GeneralPurpose  --family Gen4  --capacity 1  --zone-redundant false
+```
+az sql db create  --resource-group $resourceGroupName --server $servername --name mySampleDatabase --sample-name AdventureWorksLT --edition GeneralPurpose  --family Gen4  --capacity 1  --zone-redundant false
+```
 ```
 {
   "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
