@@ -168,7 +168,9 @@ Are you sure you want to perform this operation? (y/n): y
 ```
 ## [Powershell Scripts](https://docs.microsoft.com/en-us/azure/sql-database/scripts/sql-database-create-and-configure-database-powershell?toc=%2fpowershell%2fmodule%2ftoc.json)
 
-The following is using Azure RM Powershell module: [AzureRM.Sql](https://docs.microsoft.com/en-us/powershell/module/azurerm.sql/?view=azurermps-6.13.0)
+The following is using Azure RM Powershell module: [AzureRM.Sql](https://docs.microsoft.com/en-us/powershell/module/azurerm.sql/?view=azurermps-6.13.0).
+
+Reference: [Deploying Azure SQL Database Using Resource Manager PowerShell cmdlets](https://www.mssqltips.com/sqlservertip/4378/deploying-azure-sql-database-using-resource-manager-powershell-cmdlets/)
 
 ### [New-AzureRmSqlServer](https://docs.microsoft.com/en-us/powershell/module/azurerm.sql/new-azurermsqlserver?view=azurermps-6.13.0): create an Azure SQL Server 
 ```
