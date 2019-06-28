@@ -166,8 +166,11 @@ sqlcmd -S'server-logan.database.windows.net' -U'ServerAdmin' -P'xxxxx'
 az group delete --name $resourceGroupName
 Are you sure you want to perform this operation? (y/n): y
 ```
-## [Powershell Scripts](https://mcpmag.com/articles/2018/11/06/azure-sql-database-with-powershell.aspx)
-### New-AzureRmSqlServer: create an Azure Remote SQL Server 
+## [Powershell Scripts](https://docs.microsoft.com/en-us/azure/sql-database/scripts/sql-database-create-and-configure-database-powershell?toc=%2fpowershell%2fmodule%2ftoc.json)
+
+The following is using Azure RM Powershell module: [AzureRM.Sql](https://docs.microsoft.com/en-us/powershell/module/azurerm.sql/?view=azurermps-6.13.0)
+
+### [New-AzureRmSqlServer](https://docs.microsoft.com/en-us/powershell/module/azurerm.sql/new-azurermsqlserver?view=azurermps-6.13.0): create an Azure SQL Server 
 ```
 $cred = $(New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList 'sqladmin', $(ConvertTo-SecureString -String 'p@$$w0rd' -AsPlainText -Force))
 
@@ -191,7 +194,7 @@ Tags                     :
 Identity                 :
 FullyQualifiedDomainName : logansqlsvr.database.windows.net
 ```
-### New-AzureRmSqlServerFirewallRule: add a firewall exception to allow this ip to access
+### [New-AzureRmSqlServerFirewallRule](https://docs.microsoft.com/en-us/powershell/module/azurerm.sql/new-azurermsqlserverfirewallrule?view=azurermps-6.13.0): add a firewall exception to allow this ip to access
 ```
 $parameters = @{
       ResourceGroupName = 'LoganSQLRS'
@@ -209,7 +212,7 @@ StartIpAddress    : 192.168.1.111
 EndIpAddress      : 192.168.1.111
 FirewallRuleName  : AllowedIps
 ```
-### New-AzureRmSqlDatabase: create a SQL database with an S0 performance level
+### [New-AzureRmSqlDatabase](https://docs.microsoft.com/en-us/powershell/module/azurerm.sql/new-azurermsqldatabase?view=azurermps-6.13.0): create a SQL database with an S0 performance level
 ```
 $parameters = @{
       ResourceGroupName = 'LoganSQLRS'
