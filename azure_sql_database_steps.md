@@ -166,7 +166,83 @@ sqlcmd -S'server-logan.database.windows.net' -U'ServerAdmin' -P'xxxxx'
 az group delete --name $resourceGroupName
 Are you sure you want to perform this operation? (y/n): y
 ```
+## [Powershell Scripts](https://mcpmag.com/articles/2018/11/06/azure-sql-database-with-powershell.aspx)
+### New-AzureRmSqlServer: create an Azure Remote SQL Server 
+```
+$cred = $(New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList 'sqladmin', $(ConvertTo-SecureString -String 'p@$$w0rd' -AsPlainText -Force))
 
+$parameters = @{
+      ResourceGroupName = 'LoganSQLRS'
+      ServerName = 'LoganSQLSvr'
+      Location = 'East US'
+      SqlAdministratorCredentials = $cred
+  }
+
+New-AzureRmSqlServer @parameters
+```
+```
+ResourceGroupName        : LoganSQLRS
+ServerName               : logansqlsvr
+Location                 : eastus
+SqlAdministratorLogin    : sqladmin
+SqlAdministratorPassword :
+ServerVersion            : 12.0
+Tags                     :
+Identity                 :
+FullyQualifiedDomainName : logansqlsvr.database.windows.net
+```
+### New-AzureRmSqlServerFirewallRule: add a firewall exception to allow this ip to access
+```
+$parameters = @{
+      ResourceGroupName = 'LoganSQLRS'
+      ServerName = 'logansqlsvr'
+      FirewallRuleName = 'AllowedIps'
+      StartIpAddress = '192.168.1.111'
+      EndIpAddress = '192.168.1.111'
+  }
+New-AzureRmSqlServerFirewallRule @parameters
+```
+```
+ResourceGroupName : LoganSQLRS
+ServerName        : logansqlsvr
+StartIpAddress    : 192.168.1.111
+EndIpAddress      : 192.168.1.111
+FirewallRuleName  : AllowedIps
+```
+### New-AzureRmSqlDatabase: create a SQL database with an S0 performance level
+```
+$parameters = @{
+      ResourceGroupName = 'LoganSQLRS'
+      ServerName = 'logansqlsvr'
+      DatabaseName = 'logandb'
+     RequestedServiceObjectiveName = 'S0'
+  }
+New-AzureRmSqlDatabase @parameters
+```
+```
+ResourceGroupName             : LoganSQLRS
+ServerName                    : logansqlsvr
+DatabaseName                  : logandb
+Location                      : East US
+DatabaseId                    : ec35b513-b1f3-4f8d-9951-17912ab8b6c1
+Edition                       : Standard
+CollationName                 : SQL_Latin1_General_CP1_CI_AS
+CatalogCollation              :
+MaxSizeBytes                  : 268435456000
+Status                        : Online
+CreationDate                  : 5/12/2019 3:09:49 PM
+CurrentServiceObjectiveId     : f1173c43-91bd-4aaa-973c-54e79e15235b
+CurrentServiceObjectiveName   : S0
+RequestedServiceObjectiveId   : f1173c43-91bd-4aaa-973c-54e79e15235b
+RequestedServiceObjectiveName :
+ElasticPoolName               :
+EarliestRestoreDate           : 5/12/2019 3:40:33 PM
+Tags                          : {}
+ResourceId                    : /subscriptions/5abad358-f34a-4fdd-bd5b-5098154e267f/resourceGroups/DEMOSQL/providers/Microsoft.Sql/servers/adbsql/databases/demodb
+CreateMode                    :
+ReadScale                     : Disabled
+ZoneRedundant                 : False
+```
 ## [Bash Shell Scripts](https://docs.microsoft.com/en-us/azure/sql-database/scripts/sql-database-create-and-configure-database-cli?toc=%2fcli%2fazure%2ftoc.json)
 ```
 #!/bin/bash
