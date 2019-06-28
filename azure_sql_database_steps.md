@@ -238,7 +238,7 @@ RequestedServiceObjectiveName :
 ElasticPoolName               :
 EarliestRestoreDate           : 5/12/2019 3:40:33 PM
 Tags                          : {}
-ResourceId                    : /subscriptions/5abad358-f34a-4fdd-bd5b-5098154e267f/resourceGroups/DEMOSQL/providers/Microsoft.Sql/servers/adbsql/databases/demodb
+ResourceId                    : /subscriptions/d1aabb68-9535-4a7f-bfd4-a4476ed15e30/resourceGroups/LoganSQLRS/providers/Microsoft.Sql/servers/logansqlsvr/databases/logandb
 CreateMode                    :
 ReadScale                     : Disabled
 ZoneRedundant                 : False
