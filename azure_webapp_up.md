@@ -1,3 +1,7 @@
+# az webapp
+## az webapp
+[Manage web apps](https://docs.microsoft.com/en-us/cli/azure/webapp?view=azure-cli-latest)
+
 ## az webapp up
 az webapp up --help
 

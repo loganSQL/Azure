@@ -109,6 +109,9 @@ start http://loganwebtest.azurewebsites.net
 
 #########################
 # Play around
+# az webapp : Manage web apps
+# https://docs.microsoft.com/en-us/cli/azure/webapp?view=azure-cli-latest
+# 
 #########################
 az webapp list
 az webapp list --query "[].{hostName: defaultHostName, state: state}"
